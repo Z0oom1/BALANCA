@@ -1,0 +1,71 @@
+﻿<Page x:Class="BALANÇA.RecebimentoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BALANÇA"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      Title="RecebimentoPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{DynamicResource PrimaryHueLightBrush}" Margin="20,15,20,0" Padding="15,10" CornerRadius="5">
+            <Grid>
+                <TextBlock Text="Um caminhão acaba de ser liberado (RECEBIMENTO) - FILAS" VerticalAlignment="Center" Foreground="{DynamicResource PrimaryHueDarkBrush}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Checar" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource PrimaryHueDarkBrush}"/>
+                    <materialDesign:PackIcon Kind="BellOutline" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="Gray"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="25,20,25,10">
+            <TextBlock Text="Recebimento" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="AdicionarButton" Style="{StaticResource MaterialDesignRaisedButton}" Content="Adicionar" Click="AdicionarButton_Click"/>
+                <Button x:Name="BuscaInteligenteButton" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Margin="10,0,0,0" Content="+" Click="BuscaInteligenteButton_Click" ToolTip="Adicionar a partir de um registro existente"/>
+                <Button x:Name="RemoverButton" Style="{StaticResource MaterialDesignRaisedLightButton}" Margin="10,0,0,0" Content="Remover Linha Selecionada" Click="RemoverButton_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <DataGrid Grid.Row="2" Margin="20,0,20,20" ItemsSource="{Binding Operacoes}" AutoGenerateColumns="False" CanUserAddRows="False"
+                  Style="{StaticResource MaterialDesignDataGrid}" materialDesign:DataGridAssist.CornerRadius="5" 
+                  IsReadOnly="False" AlternatingRowBackground="#fbfcfd">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                    <Setter Property="Background" Value="#f5f7fa"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="" Binding="{Binding IsSelected}"/>
+                <DataGridTextColumn Header="Data da Passagem" Binding="{Binding DataPassagem}"/>
+                <DataGridTextColumn Header="Matéria Prima" Binding="{Binding MateriaPrima}" Width="*"/>
+                <DataGridTemplateColumn Header="Situação">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Padding="0" Height="20" Width="20" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignFlatButton}">
+                                <Button.Content>
+                                    <Border Width="15" Height="15" CornerRadius="3" Background="{Binding SituacaoCor}"/>
+                                </Button.Content>
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Chegou (Vermelho)" Click="MudarSituacao_Click" Tag="Red"/>
+                                        <MenuItem Header="Entrou (Amarelo)" Click="MudarSituacao_Click" Tag="Yellow"/>
+                                        <MenuItem Header="Saiu (Verde)" Click="MudarSituacao_Click" Tag="Green"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
