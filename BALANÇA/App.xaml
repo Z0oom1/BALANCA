@@ -10,6 +10,9 @@
                 <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepOrange" SecondaryColor="Orange" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <local:BooleanToLightDarkConverter x:Key="BooleanToLightDarkConverter"/>
+            <local:CheckedToColorConverter x:Key="CheckedToColorConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

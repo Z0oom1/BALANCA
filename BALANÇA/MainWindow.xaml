@@ -6,79 +6,154 @@
         xmlns:local="clr-namespace:BALANÇA"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Sistema de Balança" Height="720" Width="1280" WindowStartupLocation="CenterScreen"
+        Title="Sistema de Balança - Alimentos Wilson" Height="720" Width="1280" WindowStartupLocation="CenterScreen"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
     <Window.Resources>
-        <Style x:Key="MenuRadioButtonStyle" TargetType="RadioButton">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#a9b1bd"/>
-            <Setter Property="Padding" Value="20,15"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <Grid>
-                            <Border Name="background" Background="{TemplateBinding Background}" CornerRadius="8" Margin="10,2"/>
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="ChevronRight" Foreground="White" 
-                                                     HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                                     Visibility="Collapsed" Name="indicator"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="background" Property="Background" Value="{DynamicResource PrimaryHueDarkBrush}"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter TargetName="indicator" Property="Visibility" Value="Visible"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <Style x:Key="MenuRadioButtonStyle" TargetType="RadioButton">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#a9b1bd"/>
+                <Setter Property="Padding" Value="20,15"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid>
+                                <Border Name="background" Background="{TemplateBinding Background}" CornerRadius="8" Margin="10,2"/>
+                                <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <materialDesign:PackIcon Kind="ChevronRight" Foreground="White" 
+                                                         HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                                         Visibility="Collapsed" Name="indicator"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="background" Property="Background" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter TargetName="indicator" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="MenuTextTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="Visibility" Value="Visible"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=MenuToggleButton, Path=IsChecked}" Value="True">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </Window.Resources>
 
-    <Border Background="#f5f7fa" CornerRadius="10" BorderBrush="#dcdcdc" BorderThickness="1" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+    <Border Background="#f5f7fa" CornerRadius="10" BorderThickness="0" MouseLeftButtonDown="Border_MouseLeftButtonDown">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition x:Name="MenuColumn" Width="145"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Background="#1e2129" CornerRadius="10,0,0,10">
-                <StackPanel>
-                    <Image Source="https://i.imgur.com/zVwA03p.png" Width="50" Height="50" VerticalAlignment="Top" Margin="0,20,0,0"/>
-                    <TextBlock Text="Balança - Controladoria" Foreground="White" Opacity="0.5" TextWrapping="Wrap" TextAlignment="Center" Margin="5"/>
-                </StackPanel>
-            </Border>
 
-            <Border Grid.Column="1" Background="#282c37">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Margin="0,20,0,0">
-                        <RadioButton x:Name="RecebimentoRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" IsChecked="True" Click="MenuButton_Click"/>
-                        <RadioButton x:Name="CarregamentoRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click"/>
-                    </StackPanel>
-                    <RadioButton x:Name="ConfiguracoesRadio" Grid.Row="1" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click"/>
-                </Grid>
+
+            <Border Grid.Column="1" Background="#171717" CornerRadius="10" >
+                <DockPanel>
+                    <ToggleButton x:Name="MenuToggleButton" DockPanel.Dock="Top"
+                                  Style="{StaticResource MaterialDesignFlatButton}"
+                                  HorizontalAlignment="Right" Margin="0"/>
+                                  
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Controladoria AW" Foreground="White" Opacity="0.5" Margin="20,0,20,20" Style="{StaticResource MenuTextTextBlockStyle}"/>
+
+                        <StackPanel Grid.Row="1">
+                            <RadioButton x:Name="RecebimentoRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" IsChecked="True" Click="MenuButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PackageDown" Width="20" Height="20" Margin="15,0,10,10"/>
+                                    <TextBlock Text="Recebimento" Style="{StaticResource MenuTextTextBlockStyle}"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="CarregamentoRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="PackageUp" Width="20" Height="20" Margin="15,0,10,10"/>
+                                    <TextBlock Text="Carregamento" Style="{StaticResource MenuTextTextBlockStyle}"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="FilasRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Sort" Width="20" Height="20" Margin="15,0,10,10"/>
+                                    <TextBlock Text="Filas" Style="{StaticResource MenuTextTextBlockStyle}"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="CadastrosRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountGroup" Width="20" Height="20" Margin="15,0,10,10"/>
+                                    <TextBlock Text="Cadastros" Style="{StaticResource MenuTextTextBlockStyle}"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="RelatoriosRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ChartBar" Width="20" Height="20" Margin="15,0,10,10"/>
+                                    <TextBlock Text="Relatórios" Style="{StaticResource MenuTextTextBlockStyle}"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton x:Name="DadosRadio" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Database" Width="20" Height="20" Margin="15,0,10,0"/>
+                                    <TextBlock Text="Dados" Style="{StaticResource MenuTextTextBlockStyle}"/>
+                                </StackPanel>
+                            </RadioButton>
+                        </StackPanel>
+
+                        <RadioButton x:Name="ConfiguracoesRadio" Grid.Row="2" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Cog" Width="20" Height="20" Margin="10,0,15,15"/>
+                                <TextBlock Text="Configurações" Margin="-5,0,0,0" Style="{StaticResource MenuTextTextBlockStyle}"/>
+                            </StackPanel>
+                        </RadioButton>
+                    </Grid>
+                </DockPanel>
             </Border>
 
             <Grid Grid.Column="2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" Panel.ZIndex="1">
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="MinimizeButton_Click" Content="—" ToolTip="Minimizar"/>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="MaximizeButton_Click" Content="[ ]" ToolTip="Maximizar"/>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="CloseButton_Click" Content="X" ToolTip="Fechar"/>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="MinimizeButton_Click" Content="—"/>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="MaximizeButton_Click" Content="[ ]"/>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="CloseButton_Click" Content="X"/>
                 </StackPanel>
                 <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
             </Grid>
         </Grid>
     </Border>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="MenuToggleButton">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="MenuColumn" Storyboard.TargetProperty="Width" To="80" Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="MenuToggleButton">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="MenuColumn" Storyboard.TargetProperty="Width" To="220" Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
 </Window>

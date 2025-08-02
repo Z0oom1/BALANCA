@@ -1,0 +1,11 @@
+<Window
+    x:Class="BALANÇA.MainWindow"
+    WindowStyle="SingleBorderWindow"
+    ResizeMode="CanResize"
+    Title="BALANÇA"
+    Height="600"
+    Width="800">
+    <Grid>
+        <!-- Conteúdo da aplicação -->
+    </Grid>
+</Window>
