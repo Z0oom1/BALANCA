@@ -137,5 +137,14 @@ namespace BALANÇA
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public Operacao Clone()
+        {
+            // MemberwiseClone cria uma cópia superficial, que é suficiente para este caso,
+            // pois a maioria das propriedades são tipos de valor (string, bool, etc.).
+            // Para o Brush, que é um tipo de referência, criamos uma nova instância.
+            var clone = (Operacao)this.MemberwiseClone();
+            clone.SituacaoCor = new SolidColorBrush(((SolidColorBrush)this.SituacaoCor).Color);
+            return clone;
+        }
     }
 }

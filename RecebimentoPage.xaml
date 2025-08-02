@@ -1,25 +1,109 @@
-<Window x:Class="SeuNamespace.RecebimentoPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:SeuNamespace"
-        Title="Recebimento" Height="450" Width="800">
+<Page x:Class="BALANÇA.RecebimentoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BALANÇA"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      Title="RecebimentoPage"
+      d:DesignHeight="600" d:DesignWidth="1000">
+
     <Grid>
-        <DataGrid ItemsSource="{Binding Operacoes}"
-                  AutoGenerateColumns="False"
-                  CanUserResizeColumns="True"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  MinColumnWidth="100"
-                  HeadersVisibility="Column"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="25,40,25,10">
+            <TextBlock Text="Recebimento" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="AdicionarButton"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Content="Adicionar"
+                        Click="AdicionarButton_Click"
+                        Background="#cc1010"
+                        BorderBrush="#cc1010"
+                        Foreground="White"/>
+                <Button x:Name="BuscaInteligenteButton"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        Margin="10,0,10,0"
+                        ToolTip="Adicionar a partir de um registro existente"
+                        Click="BuscaInteligenteButton_Click"
+                        Background="#cc1010"
+                        BorderBrush="#cc1010"
+                        Foreground="White">
+                    <materialDesign:PackIcon Kind="Plus"/>
+                </Button>
+                <Button x:Name="RemoverButton"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Content="Remover Linha Selecionada"
+                        Click="RemoverButton_Click"
+                        Background="#737373"
+                        BorderBrush="#737373"
+                        Foreground="White"/>
+            </StackPanel>
+        </Grid>
+
+        <DataGrid Grid.Row="1" Margin="20,0,20,20"
+                  ItemsSource="{Binding Operacoes}" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False"
+                  Style="{StaticResource MaterialDesignDataGrid}" 
+                  materialDesign:DataGridAssist.CornerRadius="5"
+                  IsReadOnly="False" 
+                  AlternatingRowBackground="#fbfcfd">
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                    <Setter Property="Background" Value="#f5f7fa"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="" Width="50" Binding="{Binding IsSelected}" />
-                <DataGridTextColumn Header="Data da Passagem" Width="200" Binding="{Binding DataPassagem}" />
-                <DataGridTextColumn Header="Chegada" Width="200" Binding="{Binding Chegada}" />
-                <DataGridTextColumn Header="Entrada" Width="200" Binding="{Binding Entrada}" />
-                <DataGridTextColumn Header="Saída" Width="200" Binding="{Binding Saida}" />
-                <DataGridTemplateColumn Header="Situação" Width="200" />
+                <DataGridCheckBoxColumn Header="" Binding="{Binding IsSelected}" Width="30"/>
+                <DataGridTextColumn Header="Data da Passagem" Binding="{Binding DataPassagem}" Width="Auto"/>
+                <DataGridTextColumn Header="Matéria Prima" Binding="{Binding MateriaPrima}" Width="2*"/>
+                <DataGridTextColumn Header="Placa do Veículo" Binding="{Binding PlacaVeiculo}" Width="*"/>
+                <DataGridTextColumn Header="Doca" Binding="{Binding DocaEmbarque}" Width="Auto"/>
+                <DataGridTextColumn Header="Chegada" Binding="{Binding HoraChegada}" Width="Auto"/>
+                <DataGridTextColumn Header="Entrada" Binding="{Binding HoraEntrada}" Width="Auto"/>
+                <DataGridTextColumn Header="Peso Tara" Binding="{Binding PesoTara}" Width="*"/>
+                <DataGridTextColumn Header="Peso Bruto" Binding="{Binding PesoBruto}" Width="*"/>
+                <DataGridTextColumn Header="Peso Líquido" Binding="{Binding PesoLiquido}" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Peso NF" Binding="{Binding PesoNF}" Width="*"/>
+                <DataGridTextColumn Header="DIF(KG)" Binding="{Binding DifKg}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Header="DIF(%)" Binding="{Binding DifPercent}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Rover" Binding="{Binding Rover}" Width="Auto"/>
+                <DataGridTextColumn Header="Saída" Binding="{Binding HoraSaida}" Width="Auto"/>
+                <DataGridTextColumn Header="Nota Fiscal" Binding="{Binding NotaFiscal}" Width="*"/>
+                <DataGridTemplateColumn Header="Situação" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Center">
+                                <Border Width="15" Height="15" CornerRadius="3"
+                                        Background="{Binding SituacaoCor}"
+                                        MouseLeftButtonUp="SituacaoBorder_MouseLeftButtonUp"
+                                        ToolTip="Mudar Situação"/>
+                                <Popup IsOpen="{Binding IsSituacaoPopupOpen, Mode=TwoWay}"
+                                       Placement="Bottom" StaysOpen="False" AllowsTransparency="True"
+                                       PopupAnimation="Fade"
+                                       PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=Grid}}">
+                                    <Border Background="White" CornerRadius="4" Padding="4" Margin="4" Effect="{StaticResource MaterialDesignShadowDepth1}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Style="{StaticResource MaterialDesignFlatButton}" Background="#cc1010" Width="22" Height="22" Margin="2" Click="SituacaoCor_Click" Tag="Vermelho" ToolTip="Chegou"/>
+                                            <Button Style="{StaticResource MaterialDesignFlatButton}" Background="#ffe100" Width="22" Height="22" Margin="2" Click="SituacaoCor_Click" Tag="Amarelo" ToolTip="Entrou"/>
+                                            <Button Style="{StaticResource MaterialDesignFlatButton}" Background="#00cc10" Width="22" Height="22" Margin="2" Click="SituacaoCor_Click" Tag="Verde" ToolTip="Saiu"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
-</Window>
+</Page>
