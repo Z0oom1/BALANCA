@@ -12,26 +12,25 @@
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="MenuRadioButtonStyle" TargetType="RadioButton">
-                <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="#a9b1bd"/>
-                <Setter Property="Padding" Value="20,15"/>
-                <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RadioButton">
-                            <Grid>
-                                <Border Name="background" Background="{TemplateBinding Background}" CornerRadius="8" Margin="10,2"/>
-                                <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                <materialDesign:PackIcon Kind="ChevronRight" Foreground="White" 
-                                                         HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                                         Visibility="Collapsed" Name="indicator"/>
-                            </Grid>
+                            <Border x:Name="BordaDoBotao"
+                                    Background="#333333"
+                                    CornerRadius="10"
+                                    Margin="15,4"
+                                    
+                                    Height="40">
+                                <ContentPresenter HorizontalAlignment="Left" 
+                                                  VerticalAlignment="Center" 
+                                                  Margin="-8,0"/>
+                            </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
-                                    <Setter TargetName="background" Property="Background" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+                                    <Setter TargetName="BordaDoBotao" Property="Background" Value="#d40202" />
                                     <Setter Property="Foreground" Value="White"/>
-                                    <Setter TargetName="indicator" Property="Visibility" Value="Visible"/>
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Foreground" Value="White"/>
@@ -68,7 +67,7 @@
                     <ToggleButton x:Name="MenuToggleButton" DockPanel.Dock="Top"
                                   Style="{StaticResource MaterialDesignFlatButton}"
                                   HorizontalAlignment="Right" Margin="0"/>
-                                  
+
 
                     <Grid>
                         <Grid.RowDefinitions>
@@ -120,7 +119,7 @@
 
                         <RadioButton x:Name="ConfiguracoesRadio" Grid.Row="2" Style="{StaticResource MenuRadioButtonStyle}" GroupName="Menu" Click="MenuButton_Click">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Cog" Width="20" Height="20" Margin="10,0,15,15"/>
+                                <materialDesign:PackIcon Kind="Cog" Width="20" Height="20" Margin="10,0,15,0"/>
                                 <TextBlock Text="Configurações" Margin="-5,0,0,0" Style="{StaticResource MenuTextTextBlockStyle}"/>
                             </StackPanel>
                         </RadioButton>

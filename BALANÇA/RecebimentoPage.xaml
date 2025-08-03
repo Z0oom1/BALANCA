@@ -75,7 +75,7 @@
                 <DataGridCheckBoxColumn Header="" Binding="{Binding IsSelected}" Width="30"/>
                 <DataGridTextColumn Header="Data da Passagem" Binding="{Binding DataPassagem}" Width="Auto"/>
                 <DataGridTextColumn Header="Matéria Prima" Binding="{Binding MateriaPrima}" Width="2*"/>
-                <DataGridTextColumn Header="Placa do Veículo" Binding="{Binding PlacaVeiculo}" Width="*"/>
+                <DataGridTextColumn Header="Placa" Binding="{Binding PlacaVeiculo}" Width="*"/>
                 <DataGridTextColumn Header="Doca" Binding="{Binding DocaEmbarque}" Width="Auto"/>
                 <DataGridTextColumn Header="Chegada" Binding="{Binding HoraChegada}" Width="Auto"/>
                 <DataGridTextColumn Header="Entrada" Binding="{Binding HoraEntrada}" Width="Auto"/>
@@ -86,7 +86,7 @@
                 <DataGridTextColumn Header="DIF(KG)" Binding="{Binding DifKg}" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn Header="DIF(%)" Binding="{Binding DifPercent}" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Saída" Binding="{Binding HoraSaida}" Width="Auto"/>
-                <DataGridTextColumn Header="Nota Fiscal" Binding="{Binding NotaFiscal}" Width="*"/>
+                <DataGridTextColumn Header="NF" Binding="{Binding NotaFiscal}" Width="*"/>
                 <DataGridTemplateColumn Header="Situação" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

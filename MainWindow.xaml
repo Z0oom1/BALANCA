@@ -1,11 +1,30 @@
-<Window
-    x:Class="BALANÇA.MainWindow"
-    WindowStyle="SingleBorderWindow"
-    ResizeMode="CanResize"
-    Title="BALANÇA"
-    Height="600"
-    Width="800">
-    <Grid>
-        <!-- Conteúdo da aplicação -->
-    </Grid>
-</Window>
+<Style x:Key="MenuRadioButtonStyle" TargetType="RadioButton">
+    <Setter Property="Foreground" Value="#a9b1bd"/>
+    <Setter Property="Cursor" Value="Hand"/>
+
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="RadioButton">
+                <Border x:Name="BordaDoBotao"
+                        Background="#737373"
+                        CornerRadius="4"
+                        Margin="8,4">
+                    <ContentPresenter HorizontalAlignment="Left" 
+                                      VerticalAlignment="Center" 
+                                      Margin="15,12"/>
+                </Border>
+
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter TargetName="BordaDoBotao" Property="Background" Value="#cc1010" />
+                        <Setter Property="Foreground" Value="White"/>
+                    </Trigger>
+
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="White"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
